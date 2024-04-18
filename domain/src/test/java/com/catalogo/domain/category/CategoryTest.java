@@ -217,4 +217,92 @@ class CategoryTest {
 
     }
 
+    @Test
+    void giverAValidCategory_whenCallUpdate_thenReturnCategoryUpdate() {
+        final String expectedName = "Filmes em geral";
+        final var expectedDescription = "A categoria mais assistida";
+        final var expectedIsActive = true;
+
+        final var aCategory = Category.newCategory("Filmes 2", "A categoria ", expectedIsActive);
+
+        Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThowsValidationHandler()));
+
+        final var createdAt = aCategory.getCreatedAt();
+        final var updatedAt = aCategory.getUpdatedAt();
+
+       final var atualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
+
+        Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThowsValidationHandler()));
+
+        Assertions.assertEquals(aCategory.getId(), atualCategory.getId());
+        Assertions.assertEquals(expectedName, atualCategory.getName());
+        Assertions.assertEquals(expectedDescription, atualCategory.getDescription());
+        Assertions.assertEquals(expectedIsActive, atualCategory.getActive());
+
+        Assertions.assertEquals(createdAt, atualCategory.getCreatedAt());
+        Assertions.assertNotNull(atualCategory.getCreatedAt());
+        Assertions.assertTrue(atualCategory.getUpdatedAt().isAfter(updatedAt));
+        Assertions.assertNull(atualCategory.getDeletedAt());
+    }
+
+    @Test
+    void giverAValidCategory_whenCallUpdateToInactive_thenReturnCategoryUpdate() {
+        final String expectedName = "Filmes em geral";
+        final var expectedDescription = "A categoria mais assistida";
+        final var expectedIsActive = false;
+
+        final var aCategory = Category.newCategory("Filmes 2", "A categoria ", true);
+
+        Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThowsValidationHandler()));
+        Assertions.assertNull(aCategory.getDeletedAt());
+        Assertions.assertTrue(aCategory.getActive());
+
+        final var createdAt = aCategory.getCreatedAt();
+        final var updatedAt = aCategory.getUpdatedAt();
+
+        final var atualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
+
+        Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThowsValidationHandler()));
+
+
+
+        Assertions.assertEquals(aCategory.getId(), atualCategory.getId());
+        Assertions.assertEquals(expectedName, atualCategory.getName());
+        Assertions.assertEquals(expectedDescription, atualCategory.getDescription());
+        Assertions.assertEquals(expectedIsActive, atualCategory.getActive());
+
+        Assertions.assertEquals(createdAt, atualCategory.getCreatedAt());
+        Assertions.assertNotNull(atualCategory.getCreatedAt());
+        Assertions.assertTrue(atualCategory.getUpdatedAt().isAfter(updatedAt));
+
+    }
+
+
+    @Test
+    void giverAValidCategory_whenCallUpdateWithInvalidParams_thenReturnCategoryUpdate() {
+        final String expectedName = null;
+        final var expectedDescription = "A categoria mais assistida";
+        final var expectedIsActive = true;
+
+        final var aCategory = Category.newCategory("Filmes 2", "A categoria ", expectedIsActive);
+
+        Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThowsValidationHandler()));
+
+        final var createdAt = aCategory.getCreatedAt();
+        final var updatedAt = aCategory.getUpdatedAt();
+
+        final var atualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
+
+
+        Assertions.assertEquals(aCategory.getId(), atualCategory.getId());
+        Assertions.assertEquals(expectedName, atualCategory.getName());
+        Assertions.assertEquals(expectedDescription, atualCategory.getDescription());
+        Assertions.assertTrue(expectedIsActive);
+
+        Assertions.assertEquals(createdAt, atualCategory.getCreatedAt());
+        Assertions.assertNotNull(atualCategory.getCreatedAt());
+        Assertions.assertTrue(atualCategory.getUpdatedAt().isAfter(updatedAt));
+        Assertions.assertNull(aCategory.getDeletedAt());
+    }
+
 }
