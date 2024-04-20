@@ -98,4 +98,18 @@ public class Category extends AggregateRoot<CategoryID> {
         this.updatedAt = Instant.now();
         return this;
     }
+
+    public static Category with(final Category aCategory) {
+        return new Category(
+                aCategory.getId(),
+                aCategory.getName(),
+                aCategory.getDescription(),
+                aCategory.getActive(),
+                aCategory.getCreatedAt(),
+                aCategory.getUpdatedAt(),
+                aCategory.getDeletedAt()
+        );
+    }
+
+
 }
