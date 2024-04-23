@@ -1,0 +1,15 @@
+version: '3.2'
+
+services:
+  db:
+    build: .
+    image: mcmoe/mssqldocker
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Password123!
+      MSSQL_DB: nee
+      MSSQL_USER: SA
+      MSSQL_PASSWORD: Password123!
+    ports:
+      - "1433:1433"
+    container_name: mssqldev
