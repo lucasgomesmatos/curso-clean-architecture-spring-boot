@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8088
   compression:
     enabled: true
     mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
@@ -14,10 +14,21 @@ spring:
     url: jdbc:sqlserver://localhost:1433;database=nee;trustServerCertificate=true
     username: SA
     password: Password123!
+    hikari:
+      auto-commit: false
+      connection-timeout: 250
+      max-lifetime: 600000
+      minimum-idle: 10
+      pool-name: master
 
 jpa:
+  open-in-view: false
   show-sql: true
   hibernate:
-    ddl-auto: update
+    ddl-auto: none
     naming:
       physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  properties:
+    "[hibernate.dialect]": org.hibernate.dialect.SQLServer2012Dialect
+    "[hibernate.generate_statistics]": false
+    "[hibernate.connection.provider_disables_autocommit]": true
