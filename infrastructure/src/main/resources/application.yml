@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8080
   compression:
     enabled: true
     mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
@@ -21,7 +21,7 @@ spring:
       minimum-idle: 10
       pool-name: master
 
-jpa:
+  jpa:
   open-in-view: false
   show-sql: true
   hibernate:
@@ -32,3 +32,5 @@ jpa:
     "[hibernate.dialect]": org.hibernate.dialect.SQLServer2012Dialect
     "[hibernate.generate_statistics]": false
     "[hibernate.connection.provider_disables_autocommit]": true
+  flyway:
+    locations: classpath:/db/migration

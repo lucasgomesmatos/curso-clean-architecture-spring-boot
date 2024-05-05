@@ -5,6 +5,7 @@ import com.catalogo.domain.validation.ValidationHandler;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Category extends AggregateRoot<CategoryID> {
@@ -34,8 +35,8 @@ public class Category extends AggregateRoot<CategoryID> {
         this.name = aName;
         this.description = aDescription;
         this.active = isActive;
-        this.createdAt = aCreationDate;
-        this.updatedAt = aUpdateDate;
+        this.createdAt = Objects.requireNonNull(aCreationDate, "'creaadAt' must not be null");
+        this.updatedAt = Objects.requireNonNull(aUpdateDate, "'updatedAt' must not be null");
         this.deletedAt = aDeleteDate;
     }
 
